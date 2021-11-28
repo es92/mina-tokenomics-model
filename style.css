@@ -1,0 +1,35 @@
+body {
+  font-family: Helvetica Neue, Arial, sans-serif;
+}
+
+h1 {
+  font-weight: 200;
+  font-size: 3em;
+  margin: 0 0 0.1em 0;
+}
+
+h2 {
+  font-weight: 200;
+  font-size: 0.9em;
+  margin: 0 0 50px;
+  color: #999;
+}
+
+table, th, td {
+   border: 1px solid black;
+}
+
+table {
+   border-collapse: collapse;
+}
+
+input {
+  width: 30px;
+  margin: 0;
+  border: 0;
+}
+
+input, table, tr, th {
+  font-size: 0.9em;
+  font-weight: 500;
+}

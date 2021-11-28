@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="main.js"></script>
+  <script src="tokenChart.js"></script>
+  <script src="model.js"></script>
+  <script src="circulating.js"></script>
+  <script src="schedule.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+      <h1>Mina Token Model</h1>
+      <h2>Simulation of Block Rewards and Inflation for Mina for different parameter configurations</h2>
+
+      <canvas id="chart" width="1600" height="900"></canvas>
+      <br/>
+      <div id="radios"></div>
+      <br/>
+      <div id="fee-radios"></div>
+      <br/>
+      <table id="schedule"> </table> 
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+    <div>
+      <div> *assumes no new Mina tokens or token creating programs are created or destroyed at hard forks</div>
+      <div> **instantaneous yields calculated relative to if instantaneous block rewards were to continue for 1 year, ie 100 -&gt; 120 in one year = 20%</div>
+      <div> ***model takes steps of 1 month for its simulation</div>
+      <div> ****model uses 30 days as a month</div>
+    </div>
+</body>
+</html>
