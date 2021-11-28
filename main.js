@@ -8,7 +8,6 @@ window.onload = () => {
 
   var schedule = Schedule();
 
-
   var chart = document.getElementById("chart");
 
   var month2blockReward = schedule.month2blockReward;
