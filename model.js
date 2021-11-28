@@ -5,7 +5,7 @@ var Model = (month2blockReward, month2superchargedReward, month2fees, month2feeB
 
   var f = .75; // f is a protocol parameter that determines % of slots with a block
 
-  var months = 12*6;
+  var months = 12*10;
 
   var slotsPerDay = 24*3600/180;
   var slotsPerMonth = slotsPerDay*30;
@@ -52,7 +52,7 @@ var Model = (month2blockReward, month2superchargedReward, month2fees, month2feeB
     }
 
     var newlyUnlocked = circulating[state.slot+slotsPerMonth] - circulating[state.slot];
-    if (newlyUnlocked != null) {
+    if (newlyUnlocked != null && !isNaN(newlyUnlocked)) {
       state.locked -= newlyUnlocked;
       state.unlocked += newlyUnlocked;
     }

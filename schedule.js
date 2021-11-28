@@ -3,12 +3,12 @@
 var Schedule = () => {
 
   var customTable = {
-    checked: false,
+    modelIndex: 0,
     data: null,
   };
 
   var customFeeTable = {
-    checked: false,
+    modelIndex: 0,
     data: null,
   };
 
@@ -23,22 +23,38 @@ var Schedule = () => {
   }
 
   var originalTokenomics = {
-    month2blockReward: (m) => [720, 720, 720, 820, 850, 880, 910, 935, 880, 910, 850, 870, 800, 820, 740, 760, 680, 690, 700, 710, 725, 740, 755, 770, 790,][Math.floor(m/3)],
+    month2blockReward: (m) => [720, 720, 720, 820, 850, 880, 910, 935, 880, 910, 850, 870, 800, 820, 740, 760, 680, 690, 700, 710, 725, 740, 755, 770, 790,].concat(new Array(100).fill(800))[Math.floor(m/3)],
     month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
     month2feeBurn: (m) => 0,
   }
 
-  var proposedBRs = [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 525, 525, 475, 475, 450, 450, 450, 450, 450, 450, 450, 450, 450, 450 ];
+  var proposedBRsNoFees = [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 525, 525, 475, 475, 450, 450, 450, 450, 450, 450, 450, 450, 450, 450 ];
 
-  var proposedTokenomics = {
-    month2blockReward: (m) => proposedBRs[Math.floor(m/3)],
+  var proposedTokenomics1 = {
+    month2blockReward: (m) => proposedBRsNoFees.concat(new Array(100).fill(450))[Math.floor(m/3)],
     month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
-    month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .33, .33, .33, .33].concat(new Array(100).fill(.5))[Math.floor(m/3)],
+    //month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .25, .25, .25, .25].concat(new Array(100).fill(.25))[Math.floor(m/3)],
+    month2feeBurn: (m) => new Array(100).fill(0)[Math.floor(m/3)],
   }
 
-  var proposedTokenomicsNoBurn = {
-    month2blockReward: (m) => proposedBRs[Math.floor(m/3)],
+  var proposedTokenomics2 = {
+    month2blockReward: (m) => [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 450, 450, 350, 350, 200, 200, 100, 100, ].concat(new Array(100).fill(0))[Math.floor(m/3)],
     month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
+    //month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .25, .25, .25, .25].concat(new Array(100).fill(.25))[Math.floor(m/3)],
+    month2feeBurn: (m) => new Array(100).fill(0)[Math.floor(m/3)],
+  }
+
+  var proposedTokenomics3 = {
+    month2blockReward: (m) => [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 450, 450, 350, 350, 200, 200, 200, 150, 150, 150, 150, 150, 150, ].concat(new Array(100).fill(0))[Math.floor(m/3)],
+    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
+    //month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .33, .33, .33, .33].concat(new Array(100).fill(.5))[Math.floor(m/3)],
+    month2feeBurn: (m) => new Array(100).fill(0)[Math.floor(m/3)],
+  }
+
+  var proposedTokenomics4 = {
+    month2blockReward: (m) => [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 450, 450, 350, 350, 200, 200, 200, 200, 200, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 ].concat(new Array(100).fill(0))[Math.floor(m/3)],
+    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
+    //month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .33, .33, .33, .33].concat(new Array(100).fill(.5))[Math.floor(m/3)],
     month2feeBurn: (m) => new Array(100).fill(0)[Math.floor(m/3)],
   }
 
@@ -67,44 +83,36 @@ var Schedule = () => {
   var radios = {
     'left unchanged': leftUnchanged,
     'orignal tokenomics': originalTokenomics,
-    'proposed tokenomics (no fee burning)': proposedTokenomicsNoBurn,
-    'proposed tokenomics (with fee burning)': proposedTokenomics,
+    'proposed tokenomics corresponding to no fees': proposedTokenomics1,
+    'proposed tokenomics if 1/10,000th supply daily fees in 4 years': proposedTokenomics2,
+    'proposed tokenomics if 1/10,000th supply daily fees in 6 years': proposedTokenomics3,
+    'proposed tokenomics if 1/10,000th supply daily fees in 8 years': proposedTokenomics4,
     'custom': makeCustom()
   }
 
-  var startingSchedule = 3;
-
-  var ethAveragesPerDayByYear = [
-    0, // 2015
-    0, // 2016
-    500, // 2017
-    500, // 2018
-    500, // 2019
-    5000, // 2020 onward
-    10000, // 2021 onward
-  ]
   // ~100m eth, so 1/10,000 of eth sent around in fees each day
   // if ~1b Mina - then grow to 1e5 Mina per day
   // per block, that's 1e5/(24*20*.75), or ~280
 
-  var pricePerMina = 5;
-
   var as_fast_schedule = [].concat(
                             new Array(4).fill(0),
-                            new Array(4).fill(20),
-                            new Array(4).fill(100),
+                            new Array(2).fill(20),
+                            new Array(2).fill(50),
+                            new Array(2).fill(100),
+                            new Array(2).fill(150),
+                            new Array(4).fill(200),
                             new Array(4).fill(280),
-                            new Array(4).fill(360),
-                            new Array(5).fill(420),
+                            new Array(100).fill(280),
                          );
 
   var feeRadios = {
     'no fees': (m) => 0,
-    'fee growth to 1/40,000th of the supply per day (1/2th Ethereum today) in 4 years': (m) => as_fast_schedule[Math.floor(m/3)]/4,
-    'fee growth to 1/20,000th of the supply per day (1/4th Ethereum today) in 4 years': (m) => as_fast_schedule[Math.floor(m/3)]/2,
-    'fee growth to 1/10,000th of the supply per day (same as Ethereum today) in 4 years': (m) => as_fast_schedule[Math.floor(m/3)],
-    'fee growth to 1/5,000th of the supply per day (2x Ethereum today) in 4 years': (m) => as_fast_schedule[Math.floor(m/3)]*2,
-    'fee growth to 1/2,500th of the supply per day (4x Ethereum today) in 4 years': (m) => as_fast_schedule[Math.floor(m/3)]*4,
+    'fee growth to 1/10,000th of the supply per day (same as Ethereum today) in 4 years': (m) => as_fast_schedule[Math.floor(m/3/(4/4))],
+    'fee growth to 1/10,000th of the supply per day (same as Ethereum today) in 6 years': (m) => as_fast_schedule[Math.floor(m/3/(6/4))],
+    'fee growth to 1/10,000th of the supply per day (same as Ethereum today) in 8 years': (m) => as_fast_schedule[Math.floor(m/3/(8/4))],
+    'fee growth to 1/5,000th of the supply per day (2x Ethereum today) in 4 years': (m) => as_fast_schedule[Math.floor(m/3/(4/4))]*2,
+    'fee growth to 1/5,000th of the supply per day (2x Ethereum today) in 6 years': (m) => as_fast_schedule[Math.floor(m/3/(6/4))]*2,
+    'fee growth to 1/5,000th of the supply per day (2x Ethereum today) in 8 years': (m) => as_fast_schedule[Math.floor(m/3/(8/4))]*2,
     'custom': (m) => {
       if (customFeeTable.data != null) {
         return customFeeTable.data[0][Math.floor(m/3)]
@@ -116,11 +124,14 @@ var Schedule = () => {
 
   // file:///Users/evanshapiro/Desktop/gits/mina-inflation-model/index.html
 
-  var startingFeeSchedule = 4;
-
   var updateTable = () => {
     var schedule = document.querySelector('input[name="schedule"]:checked').value;
     var feeSchedule = document.querySelector('input[name="fees"]:checked').value;
+
+    var checkedIndex = (s) => Array.from(document.querySelector(s).parentNode.children).indexOf(document.querySelector(s))/3
+
+    var scheduleIndex = checkedIndex('input[name="schedule"]:checked')
+    var feeScheduleIndex = checkedIndex('input[name="fees"]:checked')
 
     model = radios[schedule];
 
@@ -139,21 +150,9 @@ var Schedule = () => {
       }
     });
 
-    if (schedule == 'custom') {
-      customTable.checked = true;
-      saveCustomTable();
-    } else {
-      customTable.checked = false;
-      saveCustomTable();
-    }
-
-    if (feeSchedule == 'custom') {
-      customFeeTable.checked = true;
-      saveCustomTable();
-    } else {
-      customFeeTable.checked = false;
-      saveCustomTable();
-    }
+    customTable.modelIndex = scheduleIndex;
+    customFeeTable.modelIndex = feeScheduleIndex;
+    saveCustomTable();
 
     if (e.onchange != null) {
       e.onchange();
@@ -176,7 +175,7 @@ var Schedule = () => {
     radiosDiv.appendChild(label);
     radiosDiv.appendChild(document.createElement('br'));
     
-    if (i == startingSchedule) {
+    if (i == customTable.modelIndex) {
       radio.checked = 'checked';
     }
   });
@@ -195,7 +194,7 @@ var Schedule = () => {
     feeRadiosDiv.appendChild(label);
     feeRadiosDiv.appendChild(document.createElement('br'));
     
-    if (i == startingFeeSchedule) {
+    if (i == customFeeTable.modelIndex) {
       radio.checked = 'checked';
     }
   });
@@ -204,7 +203,7 @@ var Schedule = () => {
 
   var round3 = (r) => Math.round(r*10e2)/10e2;
 
-  var quarters = new Array(72/3).fill(null).map((_, i) => i*3);
+  var quarters = new Array(12*10/3).fill(null).map((_, i) => i*3);
 
   var rows = [ 
     [ '' ].concat(quarters),
@@ -243,15 +242,11 @@ var Schedule = () => {
       customTable = data.customTable;
       customFeeTable = data.customFeeTable;
     }
-    if (customTable.checked) {
-      checkLast(document.querySelectorAll('input[name="schedule"]'));
-    }
-    if (customFeeTable.checked) {
-      checkLast(document.querySelectorAll('input[name="fees"]'));
-    }
+    checkNth(document.querySelectorAll('input[name="schedule"]'), customTable.modelIndex);
+    checkNth(document.querySelectorAll('input[name="fees"]'), customFeeTable.modelIndex);
   }
 
-  var checkLast = (v) => Array.from(v).slice(-1)[0].checked = true;
+  var checkNth = (v, n) => Array.from(v).slice(n)[0].checked = true;
 
   var table = document.getElementById('schedule');
   rows.forEach((r) => {
@@ -264,11 +259,11 @@ var Schedule = () => {
 
           ((c) => {
             if (c == '<ifee>') {
-              checkLast(document.querySelectorAll('input[name="fees"]'));
-              customFeeTable.checked = true;
+              checkNth(document.querySelectorAll('input[name="fees"]'), -1);
+              customFeeTable.modelIndex = Object.keys(feeRadios).length-1;
             } else {
-              checkLast(document.querySelectorAll('input[name="schedule"]'));
-              customTable.checked = true;
+              checkNth(document.querySelectorAll('input[name="schedule"]'), -1);
+              customTable.modelIndex = Object.keys(radios).length-1;
             }
           })(c);
 
