@@ -3,12 +3,12 @@
 var Schedule = () => {
 
   var customTable = {
-    modelIndex: 0,
+    modelIndex: 3,
     data: null,
   };
 
   var customFeeTable = {
-    modelIndex: 0,
+    modelIndex: 1,
     data: null,
   };
 
@@ -23,39 +23,17 @@ var Schedule = () => {
   }
 
   var originalTokenomics = {
-    month2blockReward: (m) => [720, 720, 720, 820, 850, 880, 910, 935, 880, 910, 850, 870, 800, 820, 740, 760, 680, 690, 700, 710, 725, 740, 755, 770, 790,].concat(new Array(100).fill(800))[Math.floor(m/3)],
-    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
+    month2blockReward: (m) => [720, 720, 720, 825, 855, 880, 910, 935, 885, 910, 850, 870, 800, 820, 750, 760, 680, 690, 700, 720, 725, 740, 755, 770, 790,].concat(new Array(100).fill(800))[Math.floor(m/3)],
+    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1070, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
     month2feeBurn: (m) => 0,
   }
 
-  var proposedBRsNoFees = [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 525, 525, 475, 475, 450, 450, 450, 450, 450, 450, 450, 450, 450, 450 ];
-
-  var proposedTokenomics1 = {
-    month2blockReward: (m) => proposedBRsNoFees.concat(new Array(100).fill(450))[Math.floor(m/3)],
-    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
-    //month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .25, .25, .25, .25].concat(new Array(100).fill(.25))[Math.floor(m/3)],
-    month2feeBurn: (m) => new Array(100).fill(0)[Math.floor(m/3)],
-  }
+  var proposedBRsNoFees = [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 525, 525, 475, 475, 450, 450, 425, 425, 400, 400, 375, 375, 350, 350, 325, 325 ].concat(new Array(100).fill(300));
 
   var proposedTokenomics2 = {
-    month2blockReward: (m) => [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 450, 450, 350, 350, 200, 200, 100, 100, ].concat(new Array(100).fill(0))[Math.floor(m/3)],
-    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
-    //month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .25, .25, .25, .25].concat(new Array(100).fill(.25))[Math.floor(m/3)],
-    month2feeBurn: (m) => new Array(100).fill(0)[Math.floor(m/3)],
-  }
-
-  var proposedTokenomics3 = {
-    month2blockReward: (m) => [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 450, 450, 350, 350, 200, 200, 200, 150, 150, 150, 150, 150, 150, ].concat(new Array(100).fill(0))[Math.floor(m/3)],
-    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
-    //month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .33, .33, .33, .33].concat(new Array(100).fill(.5))[Math.floor(m/3)],
-    month2feeBurn: (m) => new Array(100).fill(0)[Math.floor(m/3)],
-  }
-
-  var proposedTokenomics4 = {
-    month2blockReward: (m) => [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 450, 450, 350, 350, 200, 200, 200, 200, 200, 200, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 ].concat(new Array(100).fill(0))[Math.floor(m/3)],
-    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1060, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
-    //month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .25, .25, .25, .25, .33, .33, .33, .33].concat(new Array(100).fill(.5))[Math.floor(m/3)],
-    month2feeBurn: (m) => new Array(100).fill(0)[Math.floor(m/3)],
+    month2blockReward: (m) => proposedBRsNoFees[Math.floor(m/3)],
+    month2superchargedReward: (m) => [1440, 1440, 1440, 1235, 1070, ].concat(new Array(100).fill(''))[Math.floor(m/3)],
+    month2feeBurn: (m) => [0, 0, 0, 0, 0, 0, 0, .1, .1, .1, .1, .2, .2, .2, .2, .4, .4, .4, .6, .6, .6, .6].concat(new Array(100).fill(.8))[Math.floor(m/3)],
   }
 
   var makeCustom = () => {
@@ -83,10 +61,7 @@ var Schedule = () => {
   var radios = {
     'left unchanged': leftUnchanged,
     'orignal tokenomics': originalTokenomics,
-    'proposed tokenomics corresponding to no fees': proposedTokenomics1,
-    'proposed tokenomics if 1/10,000th supply daily fees in 4 years': proposedTokenomics2,
-    'proposed tokenomics if 1/10,000th supply daily fees in 6 years': proposedTokenomics3,
-    'proposed tokenomics if 1/10,000th supply daily fees in 8 years': proposedTokenomics4,
+    'proposed tokenomics (with fee burning)': proposedTokenomics2,
     'custom': makeCustom()
   }
 
