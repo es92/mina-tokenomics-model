@@ -28,7 +28,11 @@ var Schedule = () => {
     month2feeBurn: (m) => 0,
   }
 
-  var proposedBRsNoFees = [720, 720, 720, 720, 720, 675, 675, 625, 625, 575, 575, 525, 525, 475, 475, 450, 450, 425, 425, 400, 400, 375, 375, 350, 350, 325, 325 ].concat(new Array(100).fill(300));
+  var expand2 = (r) => new Array(r.length*2).fill(null).map((_, i) => r[Math.floor(i/2)]);
+
+  var proposedBRsNoFees = [720].concat(expand2([ 720, 720, 700, 675, 650, 600, 550, 500, 450, 425, 400, 375, 350, 325]), new Array(100).fill(300));
+
+    //[720, 720, 720, 720, 720, 700, 700, 625, 625, 575, 575, 525, 525, 475, 475, 450, 450, 425, 425, 400, 400, 375, 375, 350, 350, 325, 325 ].concat(new Array(100).fill(300));
 
   var proposedTokenomics2 = {
     month2blockReward: (m) => proposedBRsNoFees[Math.floor(m/3)],
@@ -177,11 +181,12 @@ var Schedule = () => {
   // ============================================================
 
   var round3 = (r) => Math.round(r*10e2)/10e2;
+  //var round4 = (r) => Math.round(r*10e3)/10e3;
 
   var quarters = new Array(12*10/3).fill(null).map((_, i) => i*3);
 
   var rows = [ 
-    [ '' ].concat(quarters),
+    [ 'month*' ].concat(quarters.map((q, i) => q + 3)),
     [ 'block reward' ].concat(quarters.map(() => '<i>')),
     [ 'block reward yield %' ].concat(quarters.map(() => '<i>')),
     [ 'supercharged reward', ].concat(quarters.map(() => '<i>')),
@@ -224,6 +229,20 @@ var Schedule = () => {
   var checkNth = (v, n) => Array.from(v).slice(n)[0].checked = true;
 
   var table = document.getElementById('schedule');
+
+  //var tr = document.createElement('tr');
+  //var th = document.createElement('th');
+  //th.innerText = '6-month start';
+  //tr.appendChild(th);
+  //quarters.forEach((q, i) => {
+  //  var th = document.createElement('th');
+  //  var year = q % 12 + 2021
+  //  th.innerText = q;
+  //  tr.appendChild(th);
+  //});
+  //table.appendChild(tr);
+
+
   rows.forEach((r) => {
     var tr = document.createElement('tr');
     r.forEach((c) => {
